@@ -65,9 +65,17 @@ namespace StreetPetsData.Data
 
             #region Comments
             modelBuilder.Entity<Comment>()
+                .HasKey(x => new { x.Id, x.PetId });
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(x => x.Pet)
+                .WithMany(x => x.Comments)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Comment>()
                 .HasOne(x => x.CreatedBy)
                 .WithMany(x => x.Comments)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Comment>()
                 .HasIndex(x => x.CreatedById);

@@ -70,29 +70,6 @@ namespace StreetPetsData.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<int>(type: "int", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeactivatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_Persons_CreatedById",
-                        column: x => x.CreatedById,
-                        principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PersonFollowingPerson",
                 columns: table => new
                 {
@@ -184,6 +161,33 @@ namespace StreetPetsData.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    PetId = table.Column<int>(type: "int", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedById = table.Column<int>(type: "int", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeactivatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => new { x.Id, x.PetId });
+                    table.ForeignKey(
+                        name: "FK_Comments_Persons_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "Persons",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comments_Pets_PetId",
+                        column: x => x.PetId,
+                        principalTable: "Pets",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersonFollowingPet",
                 columns: table => new
                 {
@@ -244,6 +248,11 @@ namespace StreetPetsData.Migrations
                 name: "IX_Comments_CreatedById",
                 table: "Comments",
                 column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_PetId",
+                table: "Comments",
+                column: "PetId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonFollowingPerson_FollowedId",

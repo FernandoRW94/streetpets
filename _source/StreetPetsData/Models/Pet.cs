@@ -61,5 +61,7 @@ namespace StreetPetsData.Models
 
         public ICollection<PersonFollowingPet> PersonFollowingPets { get; set; }
 
+        public ICollection<Comment> Comments { get; set; }
+
     }
 }

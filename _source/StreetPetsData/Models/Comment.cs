@@ -6,8 +6,12 @@ namespace StreetPetsData.Models
 {
     public class Comment
     {
-        [Key]
         public int Id { get; set; }
+
+        public int PetId { get; set; }
+
+        [ForeignKey("PetId")]
+        public Pet Pet { get; set; }
 
         [Required]
         public string Text { get; set; }

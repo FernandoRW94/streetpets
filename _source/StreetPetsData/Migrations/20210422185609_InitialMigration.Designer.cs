@@ -10,7 +10,7 @@ using StreetPetsData.Data;
 namespace StreetPetsData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210422012507_InitialMigration")]
+    [Migration("20210422185609_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,9 +89,10 @@ namespace StreetPetsData.Migrations
             modelBuilder.Entity("StreetPetsData.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    b.Property<int>("PetId")
+                        .HasColumnType("int");
 
                     b.Property<int>("CreatedById")
                         .HasColumnType("int");
@@ -109,9 +110,11 @@ namespace StreetPetsData.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "PetId");
 
                     b.HasIndex("CreatedById");
+
+                    b.HasIndex("PetId");
 
                     b.ToTable("Comments");
                 });
@@ -343,10 +346,18 @@ namespace StreetPetsData.Migrations
                     b.HasOne("StreetPetsData.Models.Person", "CreatedBy")
                         .WithMany("Comments")
                         .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("StreetPetsData.Models.Pet", "Pet")
+                        .WithMany("Comments")
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("CreatedBy");
+
+                    b.Navigation("Pet");
                 });
 
             modelBuilder.Entity("StreetPetsData.Models.Person", b =>
@@ -469,6 +480,8 @@ namespace StreetPetsData.Migrations
 
             modelBuilder.Entity("StreetPetsData.Models.Pet", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("PersonFollowingPets");
 
                     b.Navigation("PetUpdateRecords");
