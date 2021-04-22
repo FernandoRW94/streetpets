@@ -1,12 +1,13 @@
 ﻿using StreetPetsData.Interfaces;
 using StreetPetsData.Models.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StreetPetsData.Models
 {
-    public class Pet : IDateRegistry
+    public class Pet
     {
         [Key]
         public int Id { get; set; }
@@ -19,11 +20,13 @@ namespace StreetPetsData.Models
 
         public string Notes { get; set; }
 
+        [Required]
         public int BreedId { get; set; }
 
         [ForeignKey(nameof(BreedId))]
         public Breed Breed { get; set; }
 
+        [Required]
         public int AddressId { get; set; }
 
         [ForeignKey(nameof(AddressId))]
@@ -39,30 +42,24 @@ namespace StreetPetsData.Models
 
         public EntityStatus EntityStatus { get; set; }
 
+        public string Url { get; set; }
 
-        #region IDateRegistry
-
+        [Required]
         public DateTime CreatedDate { get; set; }
 
         public int CreatedById { get; set; }
 
-        [ForeignKey(nameof(CreatedById))]
-        public Person? CreatedBy { get; set; }
+        [ForeignKey("CreatedById")]
+        public Person CreatedBy { get; set; }
 
+        [Required]
         public DateTime UpdatedDate { get; set; }
-
-        public int UpdatedById { get; set; }
-
-        [ForeignKey(nameof(UpdatedById))]
-        public Person? UpdatedBy { get; set; }
 
         public DateTime? DeactivatedDate { get; set; }
 
-        public int DeactivatedById { get; set; }
+        public ICollection<PetUpdateRecord> PetUpdateRecords { get; set; }
 
-        [ForeignKey(nameof(DeactivatedById))]
-        public Person? DeactivatedBy { get; set; }
+        public ICollection<PersonFollowingPet> PersonFollowingPets { get; set; }
 
-        #endregion
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using StreetPetsData.Models.Enums;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace StreetPetsData.Models
 {
@@ -10,6 +12,8 @@ namespace StreetPetsData.Models
         [Required]
         public string Name { get; set; }
 
-        public string Description { get; set; }
+        public EntityStatus EntityStatus { get; set; }
+
+        public ICollection<Pet> Pets { get; set; }
     }
 }
