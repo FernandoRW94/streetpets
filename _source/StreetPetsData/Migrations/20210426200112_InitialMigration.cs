@@ -129,6 +129,8 @@ namespace StreetPetsData.Migrations
                     AddressId = table.Column<int>(type: "int", nullable: false),
                     IsBeingFed = table.Column<bool>(type: "bit", nullable: false),
                     PetStatus = table.Column<int>(type: "int", nullable: false),
+                    InRiskSituation = table.Column<bool>(type: "bit", nullable: false),
+                    RiskSituationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Picture = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MoreDetailsUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EntityStatus = table.Column<int>(type: "int", nullable: false),

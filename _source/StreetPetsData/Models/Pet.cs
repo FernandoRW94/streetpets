@@ -36,6 +36,10 @@ namespace StreetPetsData.Models
 
         public PetStatus PetStatus { get; set; }
 
+        public bool InRiskSituation { get; set; }
+
+        public string RiskSituationDescription { get; set; }
+
         public string Picture { get; set; }
 
         public string MoreDetailsUrl { get; set; }

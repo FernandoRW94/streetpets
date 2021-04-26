@@ -267,6 +267,9 @@ namespace StreetPetsData.Migrations
                     b.Property<int>("EntityStatus")
                         .HasColumnType("int");
 
+                    b.Property<bool>("InRiskSituation")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsBeingFed")
                         .HasColumnType("bit");
 
@@ -284,6 +287,9 @@ namespace StreetPetsData.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Picture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RiskSituationDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDate")

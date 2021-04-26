@@ -11,6 +11,7 @@ namespace StreetPetsData.Models.Enums
         STREETPET = 0,
         MISSING = 1,
         ADOPTED = 2,
-        FOUND = 3
+        FOUND = 3,
+        DEAD = 4
     }
 }
